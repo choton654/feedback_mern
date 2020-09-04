@@ -10,7 +10,7 @@ app.prepare().then(() => {
   const server = express();
 
   server.get('/', (req, res) => {
-    return res.send({ hi: 'there' });
+    return app.render(req, res, '/', req.query);
   });
 
   server.all('*', (req, res) => {
