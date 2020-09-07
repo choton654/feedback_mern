@@ -8,11 +8,17 @@ module.exports = (server) => {
     }),
   );
 
-  server.get('/auth/google/secrets', passport.authenticate('google'));
+  server.get(
+    '/auth/google/secrets',
+    passport.authenticate('google'),
+    (req, res) => {
+      res.redirect('/dashboard');
+    },
+  );
 
   server.get('/api/logout', (req, res) => {
     req.logout();
-    res.send(req.user);
+    res.redirect('/');
   });
 
   server.get('/api/current_user', (req, res) => {

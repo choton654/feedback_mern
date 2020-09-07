@@ -15,6 +15,8 @@ connectDb();
 app.prepare().then(() => {
   const server = express();
 
+  server.use(express.json());
+
   server.use(
     cookieSession({
       maxAge: 30 * 24 * 60 * 60 * 1000,
@@ -26,6 +28,7 @@ app.prepare().then(() => {
   server.use(passport.session());
 
   require('./routes/authRoutes')(server);
+  require('./routes/billingRoutes')(server);
 
   server.all('*', (req, res) => {
     return handle(req, res);

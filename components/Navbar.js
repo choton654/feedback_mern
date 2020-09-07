@@ -1,5 +1,7 @@
+import Link from 'next/link';
 import React from 'react';
 import { useSelector } from 'react-redux';
+import Payments from './Payments';
 
 function Navbar() {
   const auth = useSelector((state) => state.auth);
@@ -9,20 +11,36 @@ function Navbar() {
       case null:
         return;
       case false:
-        return <a href='/auth/google'>Login With Google</a>;
+        return (
+          <li>
+            <a href='/auth/google'>Login With Google</a>
+          </li>
+        );
       default:
-        return <a>Logout</a>;
+        return [
+          <>
+            <li key='1'>
+              <Payments />
+            </li>
+            <li key='3' style={{ margin: '0 10px' }}>
+              Credits: {auth.credits}
+            </li>
+            <li key='2'>
+              <a href='/api/logout'>Logout</a>
+            </li>
+          </>,
+        ];
     }
   };
 
   return (
     <nav>
       <div className='nav-wrapper'>
-        <a href='/' className='left brand-logo'>
-          Emaily
-        </a>
+        <Link href={auth ? '/dashboard' : '/'}>
+          <a className='left brand-logo'>Emaily</a>
+        </Link>
         <ul id='nav-mobile' className='right hide-on-med-and-down'>
-          <li>{rendercontent()}</li>
+          {rendercontent()}
         </ul>
       </div>
     </nav>
