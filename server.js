@@ -7,7 +7,6 @@ const handle = app.getRequestHandler();
 const passport = require('passport');
 const cookieSession = require('cookie-session');
 const connectDb = require('./utils/dbConnect');
-const keys = require('./config/keys');
 require('./services/passport');
 
 connectDb();
@@ -20,7 +19,7 @@ app.prepare().then(() => {
   server.use(
     cookieSession({
       maxAge: 30 * 24 * 60 * 60 * 1000,
-      keys: [keys.cookieKeys],
+      keys: [process.env.COOKIE_KEY],
     }),
   );
 
@@ -29,6 +28,7 @@ app.prepare().then(() => {
 
   require('./routes/authRoutes')(server);
   require('./routes/billingRoutes')(server);
+  require('./routes/surveyRoutes')(server);
 
   server.all('*', (req, res) => {
     return handle(req, res);

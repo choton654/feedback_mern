@@ -1,4 +1,3 @@
-const keys = require('../config/keys');
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const requireLogin = require('../middleware/requireLogin');
 
